@@ -1,10 +1,11 @@
 /******************************************************************
  * @file :                     Parser.java
- * @description:               This class reads commands from an input file and executes operations on a binary search tree (BST) of integers.
- *                             It parses each line into a command (like insert, remove, search, clear, isEmpty, print) along with an optional
- *                             integer argument. It performs the command on the BST, and then logs the results into an output file (result.txt).
+ * @description:               This class loads player records from a CSV dataset into a binary search tree (BST) of Player objects. It then reads commands
+ *                             from an input file and performs operations on the BST. Each command may include a full player record (as comma-separated values)
+ *                             or no arguments, depending on the operation. The results of each command are written to an output file (result.txt), and the print
+ *                             command writes the tree contents to a CSV file (printedTree.csv).
  * @author:                    Elham Fayzi
- * @date:                      Sep 17, 2025
+ * @date:                      Sep 25, 2025
  ******************************************************************/
 
 import java.io.*;
@@ -19,13 +20,14 @@ public class Parser {
     private BST<Player> mybst = new BST<>();
 
     // Constructor: takes an input filename for test
-    public Parser(String filename) throws FileNotFoundException {                   // make sure the naming is less confusing
+    public Parser(String filename) throws FileNotFoundException {
         File dataSet = new File("./AllTimePremierLeaguePlayerStatistics.csv");
-        parsePlayers(dataSet);
+        parsePlayers(dataSet);              // Load dataset into BST
 
-        process(new File(filename));
+        process(new File(filename));        // Process test commands from input file
     }
 
+    // Parses the dataset CSV file and inserts Player objects into the BST
     public void parsePlayers(File dataSet) throws FileNotFoundException {
         FileInputStream fis = new FileInputStream(dataSet);
         Scanner reader = new Scanner(fis);
@@ -42,6 +44,7 @@ public class Parser {
                 mybst.insert(player);
             }
             catch (Exception e) {
+                // Skip invalid lines and notify
                 System.out.println("Line Number " + lineNumber + " has an invalid format.");
 
             }
@@ -71,7 +74,7 @@ public class Parser {
                 strData = line.substring(firstSpace + 1).trim();
             }
 
-            // Adds command and number to array in this way to ensure that each command is immediately followed by its associated argument if any or an empty element if none
+            // Prepare command array: first element = command, rest = data
             if (strData == null) {
                 arr.add(new String[] {command});
             }
@@ -99,6 +102,8 @@ public class Parser {
         if (command.length == 0) return;
 
         Player pl = null;
+
+        // If there is player data, try to create a Player object
         if (command.length > 1) {
             try {
                 pl = new Player(Arrays.copyOfRange(command, 1, command.length));
