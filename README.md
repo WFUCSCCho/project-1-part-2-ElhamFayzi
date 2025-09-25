@@ -60,7 +60,9 @@ I ___strongly suggest___ that you carefully think through your strategy before j
 ∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗/
 ```
 
-## Note for running the program:
+
+
+## Note for the Grader regarding Running the Program:
 * The program must be invoked from the command-line as:
 
 ```shell
