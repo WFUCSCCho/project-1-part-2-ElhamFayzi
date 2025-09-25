@@ -62,7 +62,7 @@ I ___strongly suggest___ that you carefully think through your strategy before j
 
 
 
-## Note for the Grader regarding Running the Program:
+## Note for the Grader Regarding Program Execution:
 * The program must be invoked from the command-line as:
 
 ```shell
