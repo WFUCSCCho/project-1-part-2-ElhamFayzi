@@ -1,25 +1,22 @@
 
-insert 111
-             insert 23
+remove ajibola alese,42,west-ham-united,defender,england,19,0,0,0,0
 
-insert 99
-insert         4
+
+     remove       Sokratis,5,Arsenal,Defender,Greece,32,44,21,3,2
+
+insert test,21,afads
+
+		remove 
+
+insert testPlayer,38,testTeam,defender,england,1,1,1,1,1
 
 isEmpty
 
-    insert     111
-
 print
 
+    search testPlayer,38,testTeam,defender,england,1,1,1,1,1
 
-search 9
-
-remove 23
-
-remove 4
-remove 999999
 isEmptyasfh
-print
 
-insert 123
-print
+clear
+  isEmpty

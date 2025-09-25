@@ -59,3 +59,18 @@ I ___strongly suggest___ that you carefully think through your strategy before j
 ∗ @date: September 26, 2025
 ∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗/
 ```
+
+
+
+## Note for the Grader Regarding Program Execution:
+* The program must be invoked from the command-line as:
+
+```shell
+java Proj1.java {testInputFile} {dataset}
+```
+
+*  Command Input Format: When adding commands that involve a player (like `insert`, `remove`, or `search`) in the testInputFile, each successful command must be followed by the full player data as comma-separated values in the following order:
+```
+[Name, JerseyNumber, Club, Position, Nationality, Age, Appearances, Wins, Goals, Assists]
+```
+
