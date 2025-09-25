@@ -19,12 +19,11 @@ public class Parser {
     //Create a BST tree of Integer type
     private BST<Player> mybst = new BST<>();
 
-    // Constructor: takes an input filename for test
-    public Parser(String filename) throws FileNotFoundException {
-        File dataSet = new File("./AllTimePremierLeaguePlayerStatistics.csv");
-        parsePlayers(dataSet);              // Load dataset into BST
+    // Constructor: takes test file and the data set
+    public Parser(String testFile, String dataSet) throws FileNotFoundException {
+        parsePlayers(new File(dataSet));              // Load dataset into BST
 
-        process(new File(filename));        // Process test commands from input file
+        process(new File(testFile));        // Process test commands from input file
     }
 
     // Parses the dataset CSV file and inserts Player objects into the BST
