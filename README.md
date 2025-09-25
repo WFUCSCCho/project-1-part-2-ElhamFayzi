@@ -67,7 +67,7 @@ I ___strongly suggest___ that you carefully think through your strategy before j
 java Proj1.java {testInputFile} {dataset}
 ```
 
-*  When adding insertion, deletion, or searching commands in the testInputFile, each successful command must be followed by all of the player data (comma-separated) in the following order:
+*  Command Input Format: When adding commands that involve a player (like `insert`, `remove`, or `search`) in the testInputFile, each successful command must be followed by the full player data as comma-separated values in the following order:
 ```
 [Name, JerseyNumber, Club, Position, Nationality, Age, Appearances, Wins, Goals, Assists]
 ```
