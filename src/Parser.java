@@ -35,7 +35,7 @@ public class Parser {
         while (reader.hasNextLine()) {
             lineNumber++;
 
-            String[] line = reader.nextLine().split(",");
+            String[] line = reader.nextLine().toLowerCase().split(",");
             Player player;
             try {
                 player = new Player(line);
@@ -43,6 +43,7 @@ public class Parser {
             }
             catch (Exception e) {
                 System.out.println("Line Number " + lineNumber + " has an invalid format.");
+
             }
         }
     }
@@ -52,48 +53,77 @@ public class Parser {
         FileInputStream fis  = new FileInputStream(input);
         Scanner reader = new Scanner(fis);
 
-        ArrayList<String> arr = new ArrayList<String>();
+        ArrayList<String[]> arr = new ArrayList<String[]>();
         while (reader.hasNext()) {
-            String line = reader.nextLine();
+            String line = reader.nextLine().toLowerCase().trim();
+
             if (line.length() == 0) continue;
 
-            StringBuilder str = new StringBuilder();                // stores letters (command)
-            StringBuilder digits = new StringBuilder();             // stores digits (arguments for the commands)
+            String command;
+            String strData = null;
 
-            for (int i = 0; i < line.length(); i++) {
-                char ch = line.charAt(i);
-                if (Character.isLetter(ch)) {
-                    str.append(ch);
-                }
-                else if (Character.isDigit(ch)) {
-                    digits.append(ch);
-                }
+            int firstSpace = line.indexOf(' ');
+            if (firstSpace == -1) {
+                command = line;
+            }
+            else {
+                command = line.substring(0, firstSpace);
+                strData = line.substring(firstSpace + 1).trim();
             }
 
             // Adds command and number to array in this way to ensure that each command is immediately followed by its associated argument if any or an empty element if none
-            arr.add(str.toString());
-            arr.add(digits.toString());
+            if (strData == null) {
+                arr.add(new String[] {command});
+            }
+            else {
+                String[] arrData = strData.split(",");
+                String[] cmdAndData = new String[arrData.length + 1];
+                cmdAndData[0] = command;
+                for (int i = 0; i < arrData.length; i++) {
+                    cmdAndData[i + 1] = arrData[i].trim();
+                }
+
+                arr.add(cmdAndData);
+            }
         }
 
-        // Convert ArrayList to array
-        String[] commands = arr.toArray(new String[arr.size()]);
         reader.close();
-        operate_BST(commands);
+
+        for (String[] commandAndData : arr) {
+            operate_BST(commandAndData);
+        }
     }
 
     // Executes a series of BST operations based on commands
     public void operate_BST(String[] command) {
         if (command.length == 0) return;
 
-        Player pl = new Player(command[1]);
+        Player pl = null;
+        if (command.length > 1) {
+            try {
+                pl = new Player(Arrays.copyOfRange(command, 1, command.length));
+            } catch (Exception e) {
+                String[] badData = Arrays.copyOfRange(command, 1, command.length);
+                writeToFile("Invalid player data for " + Arrays.toString(badData),"./result.txt");
+                return;
+            }
+        }
 
         switch (command[0]) {
             case "insert" -> {
+                if (pl == null) {
+                    writeToFile("Invalid Command", "./result.txt");
+                    return;
+                }
                 mybst.insert(pl);
                 writeToFile("inserted [" + pl.toString() + "]", "./result.txt");
             }
 
             case "remove" -> {
+                if (pl == null) {
+                    writeToFile("Invalid Command", "./result.txt");
+                    return;
+                }
                 Player removed = mybst.remove(pl);
                 if (removed == null) {
                     writeToFile("remove failed ", "./result.txt");
@@ -103,6 +133,10 @@ public class Parser {
                 }
             }
             case "search" -> {
+                if (pl == null) {
+                    writeToFile("Invalid Command", "./result.txt");
+                    return;
+                }
                 Player found = mybst.search(pl);
                 if (found == null) {
                     writeToFile("search failed ", "./result.txt");
@@ -117,7 +151,7 @@ public class Parser {
                 writeToFile("Tree cleared", "./result.txt");
             }
 
-            case "isEmpty" -> {
+            case "isempty" -> {
                 if (mybst.size() == 0) {
                     writeToFile("Tree is empty", "./result.txt");
                 } else {
@@ -127,19 +161,15 @@ public class Parser {
 
             case "print" -> {
                 Iterator<Player> iter = mybst.iterator();
-                StringBuilder str = new StringBuilder();
-                while (iter.hasNext()) {
-                    str.append(iter.next());
-                    str.append(" ");
+                while (iter.hasNext()) {;
+                    writeToFile(iter.next().toString(), "./printedTree.csv");
                 }
-                writeToFile(str.toString(), "./result.txt");
+                writeToFile("Printed in printedTree.csv", "./result.txt");
             }
 
             // default case for Invalid Command
             default -> writeToFile("Invalid Command", "./result.txt");
         }
-
-        operate_BST(Arrays.copyOfRange(command, 2, command.length));
     }
 
     // Writes a line of output to a file (appends if file already exists).

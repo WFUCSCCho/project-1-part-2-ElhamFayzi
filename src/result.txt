@@ -1,0 +1,11 @@
+removed [ajibola alese,42,west-ham-united,defender,england,19,0,0,0,0]
+removed [sokratis,5,arsenal,defender,greece,32,44,21,3,2]
+Invalid player data for [test, 21, afads]
+Invalid Command
+inserted [testplayer,38,testteam,defender,england,1,1,1,1,1]
+Tree is not empty
+Printed in printedTree.csv
+found [testplayer,38,testteam,defender,england,1,1,1,1,1]
+Invalid Command
+Tree cleared
+Tree is empty
